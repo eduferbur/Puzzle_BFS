@@ -12,7 +12,9 @@ def puzzle_BFS(estado_inicial, solucion):
         nodo = nodos_frontera.pop(0)
         # extraer nodo y añadirlo a visitados
         nodos_visitados.append(nodo)
-        compara = nodo.get_datos() == solucion
+
+        # Hasta aquí todo es igual que en el ejemplo.
+        compara = nodo.get_datos() == solucion # Como es un array de Numpy, así lo comparamos
         if compara.all():
             # solucion encontrada
             solucionado = True
@@ -20,11 +22,13 @@ def puzzle_BFS(estado_inicial, solucion):
         else:
             # expandir nodos hijo
             dato_nodo = nodo.get_datos()
-            posibles_direcciones = ["D", "I", "U", "A"]
+            posibles_direcciones = ["D", "I", "U", "A"] # Movimientos de la función intercambio_array, ver en la función
             for direccion in posibles_direcciones:
+                '''Hago un try porque le voy a pedir que haga todas las posibles combinaciones, 
+                Si me salgo del índice de la matrix, dará un indexerror, pero seguirá la con los siguientes movimientos'''
                 try:
-                    nuevo_hijo = intercambio_array(dato_nodo, direccion)    # Cambia nodos_visitados!! Por que!!??
-                    hijo_nodo = Nodo(nuevo_hijo)
+                    hijo = intercambio_array(dato_nodo, direccion)    # CRISTIAN AQUÍ :'( Cambia nodos_visitados[0]!! Por que!!??
+                    hijo_nodo = Nodo(hijo)
                     if not hijo_nodo.en_lista(nodos_visitados) and not hijo_nodo.en_lista(nodos_frontera):
                         nodos_frontera.append(hijo_nodo)
                 except:
@@ -37,7 +41,7 @@ def intercambio_array(array, direccion):
     indice1 = np.where(array == 0)[0][0]    # Buscamos el cero
     indice2 = np.where(array == 0)[1][0]
 
-    if direccion == "D":
+    if direccion == "D":    # Intercambiamos el cero con el número a la derecha.
         array[indice1][indice2] = array[indice1][indice2+1]
         array[indice1][indice2+1] = 0
     elif direccion == "I":
@@ -51,7 +55,7 @@ def intercambio_array(array, direccion):
         array[indice1+1][indice2] = 0
     else:  print("Error: fallo en intercambio_array. Letra mal pasada")
 
-    return array
+    return array    # Una vez hecho el cambio, enviamos el array modificado
 
 
 if __name__ == "__main__":
