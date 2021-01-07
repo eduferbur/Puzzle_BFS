@@ -47,8 +47,3 @@ b = a                   # esto NO ES UNA COPIA
 c = copy.copy(a)        # esto SI ES UNA COPIA
 a.set_datos([2, 3, 6])  # modifica el valor de la lista
 print(a, b, c)             # a = [2, 3, 6], b = [2, 3, 6], c = [2, 3, 5]
-
-import re
-pattern = r"spam"
-if re.match(pattern, "spamspamspam"):
-    print("Match")
